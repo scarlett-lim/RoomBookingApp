@@ -22,7 +22,7 @@ namespace RoomBookingApp.Core.Processors
 
             var availableRooms = _roomBookingService.GetAvailableRoom(bookingRequest.Date);
 
-            if (availableRooms.Any())//if there is any availableRooms returned
+            if (availableRooms.Any())//if there is any available rooms returned from variable above
             {
                 Room room = availableRooms.First();
                 RoomBooking roomBooking = CreateRoomBookingObject<RoomBooking>(bookingRequest);

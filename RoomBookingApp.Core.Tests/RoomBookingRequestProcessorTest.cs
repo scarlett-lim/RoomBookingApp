@@ -102,7 +102,7 @@ namespace RoomBookingApp.Core.Tests
         [Fact]
         public void BookRoom_WithoutAvailableRoom_ShouldNotSaveRoomBookingRequestIfNoneAvailable()
         {
-            //simulate no available rooms
+            //simulate no available room
             _availableRooms.Clear();
 
             _processor.BookRoom(_bookingRequest);

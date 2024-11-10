@@ -102,7 +102,7 @@ namespace RoomBookingApp.Core.Tests
         {
             //simulate no available room
             _availableRooms.Clear();
-
+                 
             _processor.BookRoom(_bookingRequest);
 
             _roomBookingServiceMock.Verify(q => q.Save(It.IsAny<RoomBooking>()), Times.Never);

@@ -38,8 +38,6 @@ namespace RoomBookingApp.Core.Tests
         [Fact]
         public void BookRoom_WithValidBookingRequest_ReturnRoomBookingRequest()
         {
-            //Arrange
-           
             //Act
             RoomBookingResult result = _processor.BookRoom(_bookingRequest);
 
@@ -76,7 +74,7 @@ namespace RoomBookingApp.Core.Tests
         public void BookRoom_ValidBookingRequest_ShouldSaveRoomBookingRequest()
         {
             RoomBooking savedBooking = null;
-
+                 
             //step 1: capture any RoomBooking object passed to 'save' method
             _roomBookingServiceMock.Setup(q => q.Save(It.IsAny<RoomBooking>()))
                 //step 3: when Save is called within BookRoom, the callback saves the RoomBooking object to savedBooking for later inspection.
@@ -102,9 +100,9 @@ namespace RoomBookingApp.Core.Tests
         [Fact]
         public void BookRoom_WithoutAvailableRoom_ShouldNotSaveRoomBookingRequestIfNoneAvailable()
         {
-            //simulate no available rooms
+            //simulate no available room
             _availableRooms.Clear();
-
+                 
             _processor.BookRoom(_bookingRequest);
 
             _roomBookingServiceMock.Verify(q => q.Save(It.IsAny<RoomBooking>()), Times.Never);

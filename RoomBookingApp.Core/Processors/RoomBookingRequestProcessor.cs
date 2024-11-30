@@ -1,6 +1,7 @@
 ﻿using RoomBookingApp.Core.Models;
 using RoomBookingApp.Core.DataServices;
 using RoomBookingApp.Core.Domain;
+using RoomBookingApp.Core.Enum;
 
 namespace RoomBookingApp.Core.Processors
 {
@@ -21,6 +22,7 @@ namespace RoomBookingApp.Core.Processors
             }
 
             var availableRooms = _roomBookingService.GetAvailableRoom(bookingRequest.Date);
+            var result = CreateRoomBookingObject<RoomBookingResult>(bookingRequest);
 
             if (availableRooms.Any())//if there is any available rooms returned from variable above
             {
@@ -29,10 +31,18 @@ namespace RoomBookingApp.Core.Processors
 
                 roomBooking.RoomId = room.Id;
                 _roomBookingService.Save(roomBooking);
+
+                result.RoomBookingId = roomBooking.Id;
+
+                result.Flag = BookingResultFlag.Success;
+            }
+            else
+            {
+                result.Flag = BookingResultFlag.Failure;
             }
 
 
-            return CreateRoomBookingObject<RoomBookingResult>(bookingRequest);
+            return result;
         }
 
         private static TRoomBooking CreateRoomBookingObject<TRoomBooking>(RoomBookingRequest bookingRequest) where TRoomBooking

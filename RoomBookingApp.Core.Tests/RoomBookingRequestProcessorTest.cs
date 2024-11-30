@@ -1,6 +1,7 @@
 ﻿using Moq;
 using RoomBookingApp.Core.DataServices;
 using RoomBookingApp.Core.Domain;
+using RoomBookingApp.Core.Enum;
 using RoomBookingApp.Core.Models;
 using RoomBookingApp.Core.Processors;
 using Shouldly;
@@ -107,6 +108,49 @@ namespace RoomBookingApp.Core.Tests
 
             _roomBookingServiceMock.Verify(q => q.Save(It.IsAny<RoomBooking>()), Times.Never);
 
+        }
+
+        [Theory]
+        [InlineData(BookingResultFlag.Failure, false)]
+        [InlineData(BookingResultFlag.Success, true)]
+        public void BookRoom_AvailablenNotAvailable_ShouldReturnSuccessOrFailureFlagInResult(BookingResultFlag bookingSuccessFlag, bool isAvailable)
+        {
+            if (!isAvailable)
+            {
+                _availableRooms.Clear();
+            }
+
+            var result = _processor.BookRoom(_bookingRequest);
+            bookingSuccessFlag.ShouldBe(result.Flag);
+
+        }
+
+
+        [Theory]
+        [InlineData(1, true)]
+        [InlineData(null, false)]
+        public void BookRoom__ShouldReturnRoomBookingIdInResult(int? roomBookingId, bool isAvailable)
+        {
+            if (!isAvailable)
+            {
+                _availableRooms.Clear();
+            }
+            else 
+            {
+                //step 1: capture any RoomBooking object passed to 'save' method
+                _roomBookingServiceMock.Setup(q => q.Save(It.IsAny<RoomBooking>()))
+                    //step 3: when Save is called within BookRoom, the callback saves the RoomBooking object to savedBooking for later inspection.
+                    //booking = actual RoomBooking object passed into Save
+                    .Callback<RoomBooking>(booking =>
+                    {
+                        booking.Id = roomBookingId.Value;
+                    });
+
+            }
+
+            var result = _processor.BookRoom(_bookingRequest);
+
+            result.RoomBookingId.ShouldBe(roomBookingId);
         }
     }
 }

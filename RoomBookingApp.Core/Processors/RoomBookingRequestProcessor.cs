@@ -41,7 +41,6 @@ namespace RoomBookingApp.Core.Processors
                 result.Flag = BookingResultFlag.Failure;
             }
 
-
             return result;
         }
 

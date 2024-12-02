@@ -1,4 +1,5 @@
-﻿using RoomBookingApp.Core.Domain;
+﻿using RoomBookingApp.Domain;
+using RoomBookingApp.Domain.RoomBooking;
 
 namespace RoomBookingApp.Core.DataServices
 {

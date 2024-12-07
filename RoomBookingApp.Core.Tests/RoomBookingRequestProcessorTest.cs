@@ -77,9 +77,11 @@ namespace RoomBookingApp.Core.Tests
         {
             RoomBooking savedBooking = null;
 
+            //To set up mock for save function
             //step 1: capture any RoomBooking object passed to 'save' method
             _roomBookingServiceMock.Setup(q => q.Save(It.IsAny<RoomBooking>()))
-                //step 3: when Save is called within BookRoom, the callback saves the RoomBooking object to savedBooking for later inspection.
+                //step 3: when Save is called within BookRoom, the callback saves
+                //the RoomBooking object to savedBooking for later inspection.
                 //booking = actual RoomBooking object passed into Save
                 .Callback<RoomBooking>(booking =>
                 {

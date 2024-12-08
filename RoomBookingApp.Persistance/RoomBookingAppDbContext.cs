@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RoomBookingApp.Domain;
-using RoomBookingApp.Domain.RoomBooking;
 
 namespace RoomBookingApp.Persistance
 {
@@ -11,7 +10,10 @@ namespace RoomBookingApp.Persistance
             
         }
 
+        //Room table
         public DbSet<Room> Rooms { get; set; }
+        
+        //RoomBooking Table
         public DbSet<RoomBooking> RoomBookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

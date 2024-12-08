@@ -4,7 +4,6 @@ using RoomBookingApp.Core.Enum;
 using RoomBookingApp.Core.Models;
 using RoomBookingApp.Core.Processors;
 using RoomBookingApp.Domain;
-using RoomBookingApp.Domain.RoomBooking;
 using Shouldly;
 
 namespace RoomBookingApp.Core.Tests

@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using RoomBookingApp.Domain;
-using RoomBookingApp.Domain.RoomBooking;
 using RoomBookingApp.Persistance;
 using RoomBookingApp.Persistance.Repositories;
 
@@ -41,6 +40,35 @@ namespace RoomBookingAppPersistance.Tests
             Assert.Contains(availableRoom, q => q.Name == "Room 2");
             Assert.DoesNotContain(availableRoom, q => q.Id == 1);
             
+        }
+
+
+        [Fact]
+        public void ShouldSaveRoomBooking()
+        {
+            var dbOptions = new DbContextOptionsBuilder<RoomBookingAppDbContext>()
+                .UseInMemoryDatabase("ShouldSaveTest")
+                .Options;
+
+            var roomBooking = new RoomBooking
+            {
+                RoomId = 1,
+                Date = new DateTime(2024, 12, 08)
+            };
+
+            using var context = new RoomBookingAppDbContext(dbOptions);
+            var roomBookingService = new RoomBookingService(context);
+            roomBookingService.Save(roomBooking);
+
+            var bookings = context.RoomBookings.ToList();
+
+            //make sure only 1 record is returned
+            var booking = Assert.Single(bookings);
+
+            Assert.Equal(roomBooking.Date, booking.Date);
+            Assert.Equal(roomBooking.RoomId, booking.RoomId);
+
+
         }
     }
 }

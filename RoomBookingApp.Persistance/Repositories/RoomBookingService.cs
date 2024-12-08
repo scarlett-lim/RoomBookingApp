@@ -1,6 +1,5 @@
 ﻿using RoomBookingApp.Core.DataServices;
 using RoomBookingApp.Domain;
-using RoomBookingApp.Domain.RoomBooking;
 
 namespace RoomBookingApp.Persistance.Repositories
 {
@@ -14,12 +13,19 @@ namespace RoomBookingApp.Persistance.Repositories
         }
         public IEnumerable<Room> GetAvailableRoom(DateTime date)
         {
-            throw new NotImplementedException();
+
+            // 1 room can have multiple bookings
+            // q = list of rooms
+            // x = list of room bookings for the particular room
+            // get the room where there are not any bookings with the date requested
+            return _context.Rooms.Where(q => q.RoomBookings.Any(x => x.Date == date) == false)
+                .ToList();
         }
 
         public void Save(RoomBooking roomBooking)
         {
-            throw new NotImplementedException();
+            _context.Add(roomBooking);
+            _context.SaveChanges();
         }
     }
 }

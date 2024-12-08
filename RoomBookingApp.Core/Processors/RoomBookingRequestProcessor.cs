@@ -3,7 +3,6 @@ using RoomBookingApp.Core.Enum;
 using RoomBookingApp.Core.Models;
 using RoomBookingApp.Domain;
 using RoomBookingApp.Domain.BaseModels;
-using RoomBookingApp.Domain.RoomBooking;
 
 namespace RoomBookingApp.Core.Processors
 {
